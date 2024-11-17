@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center login-page-body">
+    <div class="login-container">
+        <label for="show" class="close-btn fas fa-times" title="close"></label>
+        <div class="text">Signup Form</div>
+        <form action="{% url 'signup' %}" method="post" onsubmit="return validatePassword()">
+            {% csrf_token %}
+            
+            <!-- First Name -->
+            <div class="data">
+                <label for="first_name">First Name<span class="required">*</span>:</label>
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                    <div class="error">
+                        {% for error in form.first_name.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Last Name -->
+            <div class="data">
+                <label for="last_name">Last Name<span class="required">*</span>:</label>
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                    <div class="error">
+                        {% for error in form.last_name.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Email -->
+            <div class="data">
+                <label for="email">Email<span class="required">*</span>:</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="error">
+                        {% for error in form.email.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Phone Number -->
+            <div class="data">
+                <label for="phone_number">Phone Number<span class="required">*</span>:</label>
+                {{ form.phone_number }}
+                {% if form.phone_number.errors %}
+                    <div class="error">
+                        {% for error in form.phone_number.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Password -->
+            <div class="form-group data">
+                <label for="password">Password<span class="required">*</span>:</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="error">
+                        {% for error in form.password.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group data">
+                <label for="confirm_password">Confirm Password<span class="required">*</span>:</label>
+                {{ form.confirm_password }}
+                {% if form.confirm_password.errors %}
+                    <div class="error">
+                        {% for error in form.confirm_password.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Password Mismatch Error -->
+            <div id="password-error" class="error-message" style="display: none;">Passwords do not match.</div>
+
+            <!-- Account Type -->
+            <div class="data">
+                <label for="accountType">You are registering to M-TAMBO as?<span class="required">*</span>:</label>
+                {{ form.accountType }}
+                {% if form.accountType.errors %}
+                    <div class="error">
+                        {% for error in form.accountType.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Developer/Building Owner Fields -->
+            <div id="developer-fields" class="additional-fields" style="display: none;">
+                <div class="data">
+                    <label for="developer_name">Developer Name/Individual Name<span class="required">*</span>:</label>
+                    {{ form.developer_name }}
+                    {% if form.developer_name.errors %}
+                        <div class="error">
+                            {% for error in form.developer_name.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="data">
+                    <label for="address">Address</label>
+                    {{ form.address }}
+                    {% if form.address.errors %}
+                        <div class="error">
+                            {% for error in form.address.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Maintenance Provider Fields -->
+            <div id="maintenance-fields" class="additional-fields" style="display: none;">
+                <div class="data">
+                    <label for="specialization">Equipment Specialization<span class="required">*</span>:</label>
+                    {{ form.specialization }}
+                    {% if form.specialization.errors %}
+                        <div class="error">
+                            {% for error in form.specialization.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="data">
+                    <label for="company_name">Company Name<span class="required">*</span>:</label>
+                    {{ form.company_name }}
+                    {% if form.company_name.errors %}
+                        <div class="error">
+                            {% for error in form.company_name.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="data">
+                    <label for="company_address">Company Address</label>
+                    {{ form.company_address }}
+                    {% if form.company_address.errors %}
+                        <div class="error">
+                            {% for error in form.company_address.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="data">
+                    <label for="company_registration_number">Company Registration Number<span class="required">*</span>:</label>
+                    {{ form.company_registration_number }}
+                    {% if form.company_registration_number.errors %}
+                        <div class="error">
+                            {% for error in form.company_registration_number.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Technician Fields -->
+            <div id="technician-fields" class="additional-fields" style="display: none;">
+                <div class="data">
+                    <label for="equip_specialization">Equipment Specialization<span class="required">*</span>:</label>
+                    {{ form.equip_specialization }}
+                    {% if form.equip_specialization.errors %}
+                        <div class="error">
+                            {% for error in form.equip_specialization.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Maintenance Company Dropdown-->
+                <div id="maintenance-company-fields" class="data">
+                    <label for="maintenance_company_id">Select Maintenance Company<span class="required">*</span>:</label>
+                    {{ form.maintenance_company_id }}
+                    {% if form.maintenance_company_id.errors %}
+                        <div class="error">
+                            {% for error in form.maintenance_company_id.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="btn">
+                <div class="inner"></div>
+                <button type="submit">Signup</button>
+            </div>
+            <div class="signup-link">
+                Already a member? <a href="{% url 'login' %}">Login here</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function handleAccountTypeChange() {
+        var accountType = document.getElementById('accountType').value;
+        document.querySelectorAll('.additional-fields').forEach(function(el) {
+            el.style.display = 'none';
+            el.querySelectorAll('input, select').forEach(function(field) {
+                field.required = false;
+            });
+        });
+
+        if (accountType === 'developer') {
+            var developerFields = document.getElementById('developer-fields');
+            developerFields.style.display = 'block';
+            developerFields.querySelectorAll('input').forEach(function(field) {
+                field.required = true;
+            });
+        } else if (accountType === 'maintenance') {
+            var maintenanceFields = document.getElementById('maintenance-fields');
+            maintenanceFields.style.display = 'block';
+            maintenanceFields.querySelectorAll('input, select').forEach(function(field) {
+                field.required = true;
+            });
+        } else if (accountType === 'technician') {
+            var technicianFields = document.getElementById('technician-fields');
+            technicianFields.style.display = 'block';
+            technicianFields.querySelectorAll('input, select').forEach(function(field) {
+                field.required = true;
+            });
+        }
+    }
+
+    document.getElementById('equip_specialization').addEventListener('change', function() {
+        const specialization = this.value;
+        const companyDropdown = document.getElementById('maintenance_company_id');
+
+        companyDropdown.innerHTML = '<option value="" disabled selected>Select a company</option>';
+
+        fetch(`/get_companies?specialization=${specialization}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.companies.length > 0) {
+                    data.companies.forEach(company => {
+                        const option = document.createElement('option');
+                        option.value = company.id;
+                        option.textContent = company.company_name;
+                        companyDropdown.appendChild(option);
+                    });
+                } else {
+                    window.location.reload();
+                }
+            })
+            .catch(error => console.error('Error fetching companies:', error));
+    });
+</script>
+
+{% endblock %}
