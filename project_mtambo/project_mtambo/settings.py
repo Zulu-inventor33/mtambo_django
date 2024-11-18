@@ -71,6 +71,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'project_mtambo.wsgi.application'
 
 
+#sending Emails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'mtambo.elevator@gmail.com'
+EMAIL_HOST_PASSWORD = 'Nairobi2023#'
+DEFAULT_FROM_EMAIL = 'mtambo.elevator@gmail.com'
+
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 

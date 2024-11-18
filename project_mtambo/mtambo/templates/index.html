@@ -1,363 +1,424 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Pinegrow Web Editor - SAAS Bootstrap v5 Template">
-    <meta name="author" content="">
-    <title>Mtambo | CMMS</title>
-    <!-- Bootstrap core CSS -->
-<link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
-<!-- Custom styles for this template -->
-<link href="{% static 'style.css' %}" rel="stylesheet">
-
-<!-- Additional styles -->
-<link rel="stylesheet" href="{% static 'blocks.css' %}">
-    {% block head %}{% endblock %}
-</head>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Pinegrow Web Editor - SAAS Bootstrap v5 Template">
+        <meta name="author" content="">
+        <title>Mtambo | CMMS</title>
+        
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'blocks.css' %}">
+        
+        <!-- Custom styles for this template -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    
+        <!-- The following line below gives us the styles for tailwind css -->
+        <link href="{% static 'tailwind.css' %}" rel="stylesheet">
+       
+        <!-- The following line below gives us the styles for home page-->
+        <link href="{% static 'home_page.css' %}" rel="stylesheet">
+    
+        <!-- Home Page css file styles for this template -->
+        <link href="{% static 'index.css' %}" rel="stylesheet">
+    
+        <!-- Additional styles -->
+        {% block head %}{% endblock %}
+    </head>
+    
 <body class="fw-light text-secondary">
-    <!-- Navbar -->
-    <nav class="bg-secondary navbar navbar-expand-lg navbar-light py-lg-1">
-        <div class="container">
-            <a class="fw-bold navbar-brand text-primary" href="#">M-TAMBO</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown-3" aria-controls="navbarNavDropdown-3" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown-3">
-                <ul class="ms-auto navbar-nav">
-                    <li class="nav-item">
-                        <a class="active link-light nav-link px-lg-3 py-lg-4" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="background-cover link-light nav-link px-lg-3 py-lg-4" href="#">About us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="link-light nav-link px-lg-3 py-lg-4" href="#">Dashboard</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="dropdown-toggle link-light nav-link px-lg-3 py-lg-4" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Services
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Elevators</a>
-                            <a class="dropdown-item" href="#">Power Back-up Generators</a>
-                            <a class="dropdown-item" href="#">HVAC systems</a>
+    <!--========================== Navbar Bar section =====================================-->
+    <header id="header-section" class="header-section w-full h-[64px] flex justify-center fixed top-0 left-0 z-50 transition-all duration-200">
+        <div class="container mx-auto flex justify-between items-center px-4 md:px-6">
+            <!-- Logo and Company Name -->
+            <a href="{% url 'index' %}" class="flex items-center space-x-4 cursor-pointer">
+                <span id="logo-name" class="hidden md:block text-primary text-xl font-semibold transition-colors duration-200">M-TAMBO</span>
+            </a>
+    
+            <!-- Navigation Links for Desktop Menu -->
+            <nav class="hidden md:flex space-x-6 tracking-tight">
+                <a href="{% url 'index' %}" class="desktop-link text-white transition-colors duration-300">
+                    Home
+                </a>
+                <a href="{% url 'about' %}" class="desktop-link text-white transition-colors duration-300">
+                    About Us
+                </a>
+                <a href="{% url 'dashboard' %}" class="desktop-link text-white transition-colors duration-300">
+                    Dashboard
+                </a>
+                <!-- Dropdown for Services -->
+                <div class="relative">
+                    <button class="desktop-link text-white flex items-center">
+                        Services
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="absolute hidden right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg transition-opacity duration-200 ease-in-out">
+                        <a href="{% url 'elevators' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200">Elevators</a>
+                        <a href="{% url 'generators' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200">Power Back-up Generators</a>
+                        <a href="{% url 'hvac' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200">HVAC systems</a>
+                    </div>
+                </div>
+                <a href="{% url 'contact' %}" class="desktop-link text-white transition-colors duration-300">
+                    Contact Us
+                </a>
+            </nav>
+    
+            <!-- User Account Section for Desktop -->
+            <div class="relative hidden md:block">
+                {% if user.is_authenticated %}
+                    <div class="desktop-link">
+                        <button id="user-account-btn" class="flex items-center focus:outline-none">
+                            <img src="{{ user.profile_pic }}" alt="User Profile" class="h-10 w-10 rounded-full">
+                            <span class="ml-2">{{ user.username }}</span>
+                        </button>
+                    </div>
+                    <!-- Dropdown menu for authenticated users -->
+                    <div id="user-account-dropdown" class="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg hidden transition-opacity duration-200 ease-in-out">
+                        <div class="py-2">
+                            <a href="{% url 'dashboard' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200">Dashboard</a>
+                            <a href="{% url 'logout' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200">Log Out</a>
                         </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="link-light nav-link px-lg-3 py-lg-4" href="#">Contact Us</a>
-                    </li>
-                </ul>
-                {% if current_user.is_authenticated %}
-                    <a class="btn btn-danger ms-lg-3" href="#">Log Out</a>
+                    </div>
                 {% else %}
-                    <a class="btn btn-primary ms-lg-3" href="{% url 'login' %}">Log In</a>
-                    <a class="btn btn-primary ms-lg-3" href="{% url 'signup' %}">Sign up</a>
+                    <a href="{% url 'login' %}" class="bg-[#fc4b3b] text-white py-2 px-4 rounded-md hover:bg-[#fc4b3b]/90">
+                        Log In
+                    </a>
                 {% endif %}
             </div>
-        </div>
-    </nav>
-    <!-- Main Content -->
-    <section class="bg-light pt-5 text-center">
-        <div class="container">
-            <div class="pt-5 row">
-                <div class="col-lg-8 col-xl-6 mx-auto">
-                    <h1 class="display-4 fw-normal mb-3 text-dark">Revolutionize Your Maintenance Management using the M-TAMBO CMMS</h1>
-                    <h2 class="fw-light mb-4">M-TAMBO is a computerized maintenance management tool that makes it simple to oversee and maintain your HVAC systems, elevators, and backup power generators from a single, integrated platform. Designed for ease of use, it streamlines your operations by allowing you to track, schedule and document maintenance issues efficiently, all in one place.</h2>
-                    <a href="#" class="btn btn-primary fw-light pb-2 ps-3 pe-3 pt-2">Get Started</a>
-                    <a href="#" class="btn btn-secondary fw-light pb-2 ps-3 pe-3 pt-2">Learn More</a>
-
-                </div>
+    
+            <!-- Mobile Menu Button to open mobile-menu -->
+            <div class="md:hidden">
+                <button id="nav-open" class="text-white focus:outline-none">
+                    <!-- Icon for mobile menu (SVG icon) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                    </svg>
+                </button>
             </div>
-        </div>
-    </section>
-        <div class="bg-dark">
-            <svg viewBox="0 0 100 100" preserveAspectRatio="none" fill="currentColor" version="1.1" xmlns="http://www.w3.org/2000/svg" height="80" width="100%" class="bg-secondary d-block text-white">
-                <path d="M 100 100 V 0 L 0 100"/>
-            </svg>
-            <div class="row">
-                <img src="{% static 'images/lift1.jpg' %}" alt="Lift Image">
-            </div>
-        </div>
-        <section class="pb-5 pt-5 text-center"> 
-            <div class="container pb-5 pt-5"> 
-                <div class="align-items-center mb-3 row"> 
-                    <div class="col-lg-9 ms-auto me-auto"> 
-                        <h2 class="fw-normal h1 mb-1 text-dark">Seemless Maintenance Management,Tracking and Scheduling</h2>
-                        <p>                                 Easily manage and maintain HVAC systems, elevators, and power backup generators from one unified platform. </p> 
-                    </div>                     
-                </div>                 
-                <div class="row"> 
-                    <div class="col-sm-6 col-xl-3 pb-3 pt-3"> <a href="#" class="border btn d-block link-secondary pb-5 pe-4 ps-4 pt-5"> <h3 class="fw-normal h5 text-dark">Centralized Dashboard to offer Real-Time Facility Maintenance Management and Tracking</h3> <p>Our dashboard provides a comprehensive, user-friendly interface where all users can easily access and manage their facility’s HVAC, elevator, and power systems. It offers real-time monitoring of system performance, intuitive scheduling for maintenance tasks, and quick access to critical alerts and reports</p><span class="border-bottom d-inline-block text-dark">Learn More</span> </a> 
-                    </div>                     
-                    <div class="col-sm-6 col-xl-3 pb-3 pt-3"> <a href="#" class="border btn d-block link-secondary pb-5 pe-4 ps-4 pt-5"> <h3 class="fw-normal h5 text-dark">Maintenance Calendar: Effortless Scheduling and Tracking at a Glance</h3> <p>Stay on top of your maintenance tasks with our intuitive calendar feature. It allows you to easily schedule, track, and manage all maintenance activities for your HVAC systems, elevators, and power backup generators. With clear visual timelines and reminders, you'll never miss a maintenance deadline, ensuring your systems remain in peak condition and operational efficiency is maintained.</p><span class="border-bottom d-inline-block text-dark">Learn More</span> </a> 
-                    </div>                     
-                    <div class="col-sm-6 col-xl-3 pb-3 pt-3"> <a href="#" class="border btn d-block link-secondary pb-5 pe-4 ps-4 pt-5"> <h3 class="fw-normal h5 text-dark">Cloud-Based Storage: Secure, Accessible Records Anytime, Anywhere</h3> <p>Our system uses cloud technology to ensure all your maintenance records, system data, and historical information are safely stored and easily retrievable from anywhere. Enjoy seamless access, automatic backups, and enhanced data security, providing you with peace of mind and reliable access to critical information whenever you need it.</p><span class="border-bottom d-inline-block text-dark">Learn More</span> </a> 
-                    </div>                     
-                    <div class="col-sm-6 col-xl-3 pb-3 pt-3"> <a href="#" class="border btn d-block link-secondary pb-5 pe-4 ps-4 pt-5"> <h3 class="fw-normal h5 text-dark">Seemless integration with external accounting softwares to enhance financial management</h3> <p>Our platform connects effortlessly with popular accounting tools, enabling automatic synchronization of maintenance expenses, budget tracking, and financial reporting. This integration simplifies the accounting process, reduces manual data entry, and provides a comprehensive view of your facility’s financial health, ensuring accurate and efficient financial management.</p><span class="border-bottom d-inline-block text-dark">Learn More</span> </a> 
-                    </div>                     
-                </div>                 
-            </div>             
-        </section>
-        <section class="pb-5 pt-5">
-            <div class="container pb-4 pt-4"> 
-                <div class="align-items-center row"> 
-                    <div class="col-lg-6 ms-auto order-lg-2 py-3 text-center"> 
-                        <img src="{% static 'images/generator1.jpg' %}" alt="Generator Image">
-                    </div>                     
-                    <div class="col-lg-5 order-lg-1 py-3"> 
-                        <h2 class="fw-normal h1 mb-2 text-dark">Track all your technicians and their assigned jobs</h2>
-                        <p class="fw-light mb-4">Monitor and manage the activities and assignments of your technicians. This includes keeping a record of who is working on what tasks or maintenance jobs, ensuring that you know the status of each job, who is responsible for it, and when it is due to be completed. This helps in organizing and optimizing the maintenance work process, improving efficiency, and ensuring that all tasks are completed on time.</p> <a href="#" class="btn btn-primary fw-light pb-2 ps-3 pe-3 pt-2">Learn More</a> 
-                    </div>                     
-                </div>                 
-            </div>
-            <div class="container pb-4 pt-4"> 
-                <div class="align-items-center row"> 
-                    <div class="col-lg-6 me-lg-3 pb-3 pt-3 text-center"> 
-                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/ZJ6tr1kkRDg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                    </div>     
-                    <div class="col-lg-5 pb-3 pt-3"> 
-                        <h2 class="fw-normal h1 mb-2 text-dark">Manage all your ongoing and upcoming maintenance tasks</h2>
-                        <p class="fw-light mb-4">By having a centralized system to oversee all activities, companies can improve coordination, reduce downtime, and enhance service quality.</p> <a href="#" class="btn btn-primary fw-light pb-2 ps-3 pe-3 pt-2">Learn More</a> 
-                    </div>                     
-                </div>                 
-            </div>
-        </section>
-        <section class="bg-primary pb-5 pt-5 text-white"> 
-            <div class="container pb-3 pt-3"> 
-                <div class="align-items-center row"> 
-                    <div class="col-xl-5 mt-n5  order-xl-2 pb-3 pt-3"> 
-</div>                     
-                    <div class="col-xl-7 ms-auto order-xl-1 pb-3 pt-3"> 
-                        <h2 class="fw-normal h1 mb-2">Everything you need to manage in one place</h2>
-                        <p class="fw-light mb-3"> We offer you the luxury of recording and tracking all your maintenance operations on one platform</p>
-                        <div class="row">
-                            <div class="col-md-4 pb-3 pt-3">
-                                <div>
-                                    <h3 class="fw-normal h5">Comprehensive Maintenance Tracking</h3>
-                                    <p class="mb-0">Easily manage and track all your ongoing and upcoming maintenance tasks to ensure no job is missed, enhancing productivity and minimizing downtime.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 pb-3 pt-3">
-                                <div>
-                                    <h3 class="fw-normal h5">Advanced Asset Management</h3>
-                                    <p class="mb-0">Keep detailed records of all your equipment and assets, including service history and performance data, to optimize maintenance schedules and extend asset lifespan.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 pb-3 pt-3">
-                                <div>
-                                    <h3 class="fw-normal h5">Real-Time Monitoring & Alerts</h3>
-                                    <p class="mb-0">Monitor equipment status in real-time with automated alerts for maintenance needs, enabling quick response to prevent potential breakdowns and ensure smooth operations.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>                     
-                </div>                 
-            </div>             
-        </section>
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none" fill="currentColor" version="1.1" xmlns="http://www.w3.org/2000/svg" height="64" width="100%" class="bg-primary d-block text-light">
-            <path d="M 100 100 V 0 L 0 100"/>
-        </svg>
-        <section class="bg-light pb-5 pt-5 text-center"> 
-            <div class="container pb-3 position-relative pt-3"> 
-                <h2 class="fw-normal h1 mb-1 text-dark">Don&apos;t just take our word for it</h2>
-                <p class="mb-5">See what people have to say about our product</p>
-                <div class="row"> 
-                    <div class="col-lg-8 ms-auto me-auto"> 
-                        <div id="carousel5" class="carousel slide" data-bs-ride="carousel"> 
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="https://risersafe.com/wp-content/uploads/2023/04/RScircle_AM.webp" width="200" height="200" alt="User image">
-                                    <p class="fw-light h5 mb-4">"M-Tambo CMMS has transformed how we manage our building assets. It provides a clear view of all maintenance activities, helping us schedule tasks efficiently and reduce downtime. It's a game-changer for building managers like us!"</p>
-                                    <h3 class="fw-bold h4 mb-0 text-primary">James Anderson</h3>
-                                    <p>Building Manager, Green Tower Estates</p>
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fmechanical&psig=AOvVaw26Tt17f1td1zbB89sY25kn&ust=1726240845392000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMCCwdLavYgDFQAAAAAdAAAAABAE" width="200" height="200" alt="User image">
-                                    <p class="fw-light h5 mb-4">"As a maintenance service provider, M-Tambo has enabled us to streamline our operations. We can now easily track all job assignments, manage our team more effectively, and ensure high-quality service delivery to our clients."</p>
-                                    <h3 class="fw-bold h4 mb-0 text-primary">Sarah Johnson</h3>
-                                    <p>Operations Manager, TechMaintain Services</p>
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="https://lh3.googleusercontent.com/proxy/dRg_NULMhgEbscQ8WLT7FRqKjl1n5Oby1GbgOkYt2u3_PPvapyijeTYRrXWIf-NTCw9caRysL-dTTSa8s7UN_BWX0WdYvwg0SvSz8Su6CwNqr7VXrhQ7ksRhQoLDzHu9FP9KcQ" width="200" height="200" alt="User image">
-                                    <p class="fw-light h5 mb-4">"M-Tambo has made a huge difference in how I work. I receive alerts for upcoming maintenance tasks and can log my activities on the go, ensuring nothing is missed. It's made my job much easier and more efficient."</p>
-                                    <h3 class="fw-bold h4 mb-0 text-primary">Michael Brown</h3>
-                                    <p>Senior Technician, ABC Maintenance Co.</p>
-                                </div>
-                            </div>
-                            
-                            <ol class="carousel-indicators position-relative"> 
-                                <li data-bs-target="#carousel5" data-bs-slide-to="0" class="active bg-primary"></li>                                 
-                                <li data-bs-target="#carousel5" data-bs-slide-to="1" class="bg-primary"></li>                                 
-                                <li data-bs-target="#carousel5" data-bs-slide-to="2" class="bg-primary"></li>                                 
-                            </ol>                             
-                        </div>                         
-                    </div>                     
-                </div>                 
-            </div>             
-        </section>
-        <section class="bg-light pb-5 pt-5 text-center"> 
-            <div class="container "> 
-                <div class="align-items-center row"> 
-                    <div class="col-xl-10 ms-auto me-auto">
-                        <div class="bg-primary pb-5 ps-4 pe-4 pt-5 rounded-3 text-white">
-                            <h2 class="fw-normal h1 mb-2">Streamline Your Maintenance Management with M-Tambo</h2>
-                            <p class="mb-4">Take control of your building maintenance processes with ease. M-Tambo CMMS offers powerful tools to manage tasks, track equipment, and optimize workflows efficiently.</p>
-
-                            <a href="#" class="btn btn-light fw-light pb-2 ps-3 pe-3 pt-2">Sign Up Now</a>
-                        </div>                         
-                    </div>                     
-                </div>                 
-            </div>
-            <section class="bg-light pb-5 pt-5 text-center"> 
-                <div class="container pb-4 pt-4"> 
-                    <h2 class="fw-normal h1 mb-1 text-dark">Be Part of the M-Tambo Community</h2>
-                    <p class="mb-4">Choose the maintenance management plan that best suits your needs.</p> 
-                    <div class="col-xl-11 ms-auto me-auto px-0">
-                        <div class="align-items-center justify-content-center row"> 
-            
-                            <!-- Starter Plan -->
-                            <div class="col-lg-4 col-md-6 py-3"> 
-                                <div class="bg-light border rounded text-secondary"> 
-                                    <div class="align-items-center d-flex fw-light h5 justify-content-center pb-4 pe-3 ps-3 pt-4"> 
-                                        <span class="align-self-start">$</span> 
-                                        <span class="display-4 fw-normal text-dark">19</span> 
-                                        <span class="align-self-end">/mo</span> 
-                                    </div>                                 
-                                    <h3 class="bg-dark fw-normal h4 mb-0 pb-3 pe-2 ps-2 pt-3 text-uppercase text-white">Basic</h3> 
-                                    <div class="pb-5 ps-3 pe-3 pt-4"> 
-                                        <ul class="list-unstyled mb-4"> 
-                                            <li class="pb-2 pt-2">Manage up to 5 Buildings</li>                                         
-                                            <li class="pb-2 pt-2">Basic Analytics</li>                                         
-                                            <li class="pb-2 pt-2">Single User Access</li>                                         
-                                            <li class="pb-2 pt-2">Email Support</li>                                         
-                                            <li class="pb-2 pt-2">Access to Community Forum</li>                                         
-                                        </ul>                                     
-                                        <a href="#" class="btn btn-dark fw-light pb-2 ps-4 pe-4 pt-2">Sign Up</a> 
-                                    </div>                                 
-                                </div>                             
-                            </div>                         
-            
-                            <!-- Professional Plan -->
-                            <div class="col-lg-4 col-md-6 py-3"> 
-                                <div class="bg-light border rounded text-secondary"> 
-                                    <div class="align-items-center d-flex fw-light h5 justify-content-center pb-4 ps-3 pe-3 pt-4"> 
-                                        <span class="align-self-start">$</span> 
-                                        <span class="display-4 fw-normal text-dark">49</span> 
-                                        <span class="align-self-end">/mo</span> 
-                                    </div>                                 
-                                    <h3 class="bg-primary fw-normal h4 mb-0 pb-3 pe-2 ps-2 pt-3 text-uppercase text-white">Professional</h3> 
-                                    <div class="pb-5 ps-3 pe-3 pt-4"> 
-                                        <ul class="list-unstyled mb-4"> 
-                                            <li class="pb-2 pt-2">Unlimited Buildings</li>                                         
-                                            <li class="pb-2 pt-2">Advanced Analytics and Reports</li>                                         
-                                            <li class="pb-2 pt-2">Multi-User Access</li>                                         
-                                            <li class="pb-2 pt-2">Priority Email Support</li>                                         
-                                            <li class="pb-2 pt-2">API Access</li>                                         
-                                        </ul>                                     
-                                        <a href="#" class="btn btn-primary fw-light pb-2 ps-4 pe-4 pt-2">Sign Up</a> 
-                                    </div>                                 
-                                </div>                             
-                            </div>                         
-            
-                            <!-- Enterprise Plan -->
-                            <div class="col-lg-4 col-md-6 py-3"> 
-                                <div class="bg-light border rounded text-secondary"> 
-                                    <div class="align-items-center d-flex fw-light h5 justify-content-center pb-4 ps-3 pe-3 pt-4"> 
-                                        <span class="align-self-start">$</span> 
-                                        <span class="display-4 fw-normal text-dark">99</span> 
-                                        <span class="align-self-end">/mo</span> 
-                                    </div>                                 
-                                    <h3 class="bg-dark fw-normal h4 mb-0 pb-3 pe-2 ps-2 pt-3 text-uppercase text-white">Enterprise</h3> 
-                                    <div class="pb-5 ps-3 pe-3 pt-4"> 
-                                        <ul class="list-unstyled mb-4"> 
-                                            <li class="pb-2 pt-2">Unlimited Buildings and Assets</li>
-                                            <li class="pb-2 pt-2">Real-Time Analytics and Dashboard</li>
-                                            <li class="pb-2 pt-2">Dedicated Account Manager</li>
-                                            <li class="pb-2 pt-2">24/7 Phone Support</li>
-                                            <li class="pb-2 pt-2">Custom Integrations</li>                                         
-                                        </ul>                                     
-                                        <a href="#" class="btn btn-dark fw-light pb-2 ps-4 pe-4 pt-2">Sign Up</a> 
-                                    </div>                                 
-                                </div>                             
-                            </div>                         
-                        </div>                     
-                    </div>                 
-                </div>             
-            </section>
-                        
-<footer class="bg-dark pt-5 text-white">
-<div class="container">
-    <div class="row">
-        <div class="col-xl-4 py-3">
-            <a href="#" class="d-inline-block fw-bold h2 link-light mb-4 text-decoration-none" target="_pg_blank">M-TAMBO CMMS</a>
-            <p class="mb-3">
-                M-Tambo CMMS provides a comprehensive maintenance management platform for building owners, maintenance companies, and technicians across Africa. Streamline your operations and enhance productivity with our state-of-the-art software solutions.
-            </p>
-            <div class="mb-4">
-                <a href="tel:+254123456789" class="link-light text-decoration-none">+254 123 456 789</a> <br>
-                <a href="mailto:support@m-tambo.com" class="link-light text-decoration-none">support@m-tambo.com</a>
-            </div>
-        </div>
-        <div class="col-md-3 col-xl-2 py-3">
-            <h2 class="fw-normal h5 mb-4 text-uppercase text-white">About</h2>
-            <ul class="list-unstyled">
-                <li class="mb-3"> <a href="#" class="link-light text-decoration-none">Get a Quote</a></li>
-                <li class="mb-3"> <a href="#" class="link-light text-decoration-none">Enterprise Plan</a></li>
-                <li class="mb-3"> <a href="#" class="link-light text-decoration-none">Partners & Affiliates</a></li>
-                <li class="mb-3"> <a href="#" class="link-light text-decoration-none">Our Clients</a></li>
-            </ul>
-        </div>
-        <div class="col-md-3 col-xl-2 py-3">
-            <h2 class="fw-normal h5 mb-4 text-uppercase text-white">Services</h2>
-            <ul class="list-unstyled">
-                <li class="mb-3"> <a href="#" class="link-light text-decoration-none">Asset Management</a></li>
-                <li class="mb-3"> <a href="#" class="link-light text-decoration-none">Preventive Maintenance</a></li>
-                <li class="mb-3"> <a href="#" class="link-light text-decoration-none">Work Order Tracking</a></li>
-                <li class="mb-3"> <a href="#" class="link-light text-decoration-none">Inventory Management</a></li>
-                <li class="mb-3"> <a href="#" class="link-light text-decoration-none">Reporting & Analytics</a></li>
-            </ul>
-        </div>
-        <div class="col-md-6 col-xl-4 py-3">
-            <h2 class="fw-normal h5 mb-4 text-uppercase text-white">Subscribe</h2>
-            <p class="mb-3">Subscribe to our newsletter and get exclusive updates directly in your inbox.</p>
-            <form class="mb-4">
-                <div class="bg-white border input-group p-1 rounded">
-                    <input type="email" class="border-0 form-control pe-3 ps-3" placeholder="Enter email..." aria-label="Recipient's email" aria-describedby="button-addon2" required>
-                    <button class="btn btn-primary pb-2 pe-4 ps-4 pt-2 rounded" type="submit" id="button-addon2" aria-label="submit">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="d-inline-block" height="16" width="16">
-                            <path d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path>
+    
+            <!-- Mobile Menu Navigation -->
+            <nav id="mobile-menu" class="fixed top-0 right-[-100%] bg-white w-[80%] h-full shadow-lg py-24 px-16 flex flex-col gap-10 transition-all duration-400 ease-in-out z-40">
+                <div class="absolute right-4 top-6">
+                    <button id="nav-close" class="focus:outline-none" aria-label="Close menu">
+                        <!-- Close icon (SVG) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
                     </button>
                 </div>
-            </form>
-            <h2 class="fw-normal h5 mb-3 text-uppercase text-white">Get Social</h2>
-            <div class="d-inline-flex flex-wrap">
-                <a href="#" class="link-light p-1" aria-label="facebook link">Facebook</a>
-                <a href="#" class="link-light p-1" aria-label="twitter link">Twitter</a>
-                <a href="#" class="link-light p-1" aria-label="linkedin link">LinkedIn</a>
+                <a href="{% url 'index' %}" class="nav-link text-gray-700 p-2 rounded transition duration-300">Home</a>
+                <a href="{% url 'about' %}" class="nav-link text-gray-700 p-2 rounded transition duration-300">About Us</a>
+                <a href="{% url 'dashboard' %}" class="nav-link text-gray-700 p-2 rounded transition duration-300">Dashboard</a>
+                <a href="{% url 'contact' %}" class="nav-link text-gray-700 p-2 rounded transition duration-300">Contact Us</a>
+                <!-- Mobile Dropdown for Services -->
+                <div class="relative">
+                    <button class="nav-link text-gray-700 p-2 rounded transition duration-300">
+                        Services
+                    </button>
+                    <div class="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg">
+                        <a href="{% url 'elevators' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200">Elevators</a>
+                        <a href="{% url 'generators' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200">Power Back-up Generators</a>
+                        <a href="{% url 'hvac' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200">HVAC systems</a>
+                    </div>
+                </div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="nav-link text-gray-700 p-2 rounded transition duration-300">Log Out</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="nav-link text-gray-700 p-2 rounded transition duration-300">Log In</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <!--=========================== Hero section ==========================================-->
+    <section id="hero_section" class="relative bg-light pt-5 text-center min-h-[510px]">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+            <!-- Background Image -->
+            <picture class="block w-full h-full">
+                <source srcset="{% static 'images/lift1.jpg' %}" media="(min-width: 1440px)">
+                <source srcset="{% static 'images/lift1.jpg' %}" media="(max-width: 640px)">
+                <img src="{% static 'images/lift1.jpg' %}" class="w-full h-full object-cover" alt="hero section background">
+            </picture>
+        </div>
+        <!-- Overlay -->
+        <div class="absolute top-0 left-0 w-full h-full bg-[rgba(25,27,38,0.6)]"></div>
+    
+        <div class="content_section relative w-full flex items-center justify-center flex-col text-center min-h-[510px] px-[32px] text-white">
+            <div class="content-wrapper w-full max-w-[840px] flex flex-col items-start">
+                <!-- Hero Title -->
+                <h1 class="mb-2 text-[1.8rem] font-extrabold text-white capitalize text-center w-full">
+                    Revolutionize Your Maintenance Management with the M-TAMBO CMMS
+                </h1>
+                <!-- Hero Subtitle -->
+                <h2 class="fw-light mb-4 text-lg">
+                    M-TAMBO is an easy-to-use maintenance management tool that helps you oversee HVAC systems, elevators, and power generators from a single platform. Simplify scheduling, tracking, and documenting maintenance to streamline your operations
+                </h2>
+    
+                <!-- Call to Action Buttons -->
+                <div class="mt-4 flex justify-center gap-4">
+                    <button class="rounded-md bg-[#2c2c64] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#2c2c64]/90 focus-visible:outline focus-visible:outline-2">
+                        <a href="{% url 'signup' %}" class="no-underline">Get Started</a>
+                    </button>
+                    <button class="rounded-md bg-[#fc4b3b] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#fc4b3b]/90 focus-visible:outline focus-visible:outline-2">
+                        <a href="{% url 'about' %}" class="no-underline">
+                            Learn More
+                        </a>
+                    </button>
+                </div>
+            </div>
+            <div class="absolute left-8 bottom-6 flex items-center gap-x-4 rounded-full px-4 py-1 text-sm leading-6 ring-1 ring-white cursor-pointer">
+                <span class="h-4 w-px bg-white"></span>
+                <span class="flex gap-1">
+                    <span class="text-white font-semibold">Home</span>
+                    <span><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg></span>
+                </span>
             </div>
         </div>
-    </div>
-    <div class="pb-3 pt-3 small">
-        <hr class="border-secondary mt-0">
-        <div class="align-items-center row">
-            <div class="col-md pb-2 pt-2">
-                <p class="mb-0">&copy; 2021 - 2024 | All Rights Reserved - M-TAMBO CMMS, Nairobi, Kenya</p>
+    </section>    
+
+    <!--======================= Why Choose Us section ======================================-->
+    <section class="py-16 bg-gray-100"> 
+        <div class="max-w-7xl mx-auto px-6 lg:px-8"> 
+            <!-- Section Header -->
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-semibold text-black mb-4">
+                    Why Choose <span class="text-[#fc4b3b]">Us</span>
+                </h2>
+                <p class="text-lg text-gray-800 max-w-3xl mx-auto">
+                    Unlock seamless facility management with our all-in-one platform. Effortlessly track, maintain, and optimize HVAC, elevators, and backup generators — all from one centralized dashboard.
+                </p>
+            </div>                
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"> 
+                <!-- Reason 1 -->
+                <div class="reason-card bg-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition-all duration-300"> 
+                    <a href="{% url 'about' %}" class="block text-black">
+                        <h3 class="text-xl font-semibold mb-3">
+                            Real-Time Facility Management at Your Fingertips
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Imagine having a bird’s-eye view of your entire facility’s health. Our intuitive dashboard lets you monitor HVAC, elevators, and generators in real-time, offering you precise control and instant alerts when action is needed.
+                        </p>
+                        <span class="text-[#fc4b3b] font-semibold hover:underline">Discover More</span>
+                    </a> 
+                </div>                     
+                <!-- Reason 2 -->
+                <div class="reason-card bg-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition-all duration-300">
+                    <a href="{% url 'about' %}" class="block text-black">
+                        <h3 class="text-xl font-semibold mb-3">
+                            Effortless Scheduling with a Visual Maintenance Calendar
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Stay ahead of maintenance with a sleek, visual calendar that keeps you on track. Schedule, track, and receive reminders for HVAC, elevator, and backup generator servicing—so you’ll never miss a beat in system performance.
+                        </p>
+                        <span class="text-[#fc4b3b] font-semibold hover:underline">Learn More</span>
+                    </a> 
+                </div>                     
+                <!-- Reason 3 -->
+                <div class="reason-card bg-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition-all duration-300">
+                    <a href="{% url 'about' %}" class="block text-black">
+                        <h3 class="text-xl font-semibold mb-3">
+                            Cloud-Based Access: Maintenance Records at Your Command
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Forget the hassle of paper records. With our secure cloud storage, access all your maintenance history, system data, and reports from anywhere, anytime. Stay organized with automated backups and top-tier security.
+                        </p>
+                        <span class="text-[#fc4b3b] font-semibold hover:underline">Explore More</span>
+                    </a> 
+                </div>                     
+                <!-- Reason 4 -->
+                <div class="reason-card bg-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition-all duration-300">
+                    <a href="{% url 'about' %}" class="block text-black">
+                        <h3 class="text-xl font-semibold mb-3">
+                            Financial Peace of Mind with Seamless Accounting Integration
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Say goodbye to manual data entry. Our platform syncs effortlessly with top accounting software, streamlining expense tracking, budgeting, and reporting—giving you a crystal-clear view of your facility’s financial health.
+                        </p>
+                        <span class="text-[#fc4b3b] font-semibold hover:underline">See How</span>
+                    </a> 
+                </div>                     
+            </div>                 
+        </div>             
+    </section>      
+
+    <!--======================= Track all your technicians section =========================-->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- First Card: Image with Text Overlay -->
+            <div class="bg-cover bg-center h-72 rounded-lg shadow-md relative">
+                <div class="absolute inset-0 bg-black opacity-40 rounded-lg"></div> <!-- Overlay -->
+                <div class="absolute inset-0 flex items-center justify-center p-6 text-center text-white">
+                    <div>
+                        <h2 class="text-2xl font-semibold mb-2">Track Your Technicians in Real-Time</h2>
+                        <p class="text-base mb-4">Optimize field operations and streamline communication with real-time technician tracking. Gain valuable insights into team performance and ensure timely job completion.</p>
+                        <a href="{% url 'about' %}" class="inline-block px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded transition-all text-sm font-semibold">Learn More</a>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-auto pb-2 pt-2">
-                <a href="#" class="link-light text-decoration-none">Privacy Policy</a> 
-                <a href="#" class="link-light text-decoration-none">Terms of Use</a>
+    
+            <!-- Second Card: Video -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/ZJ6tr1kkRDg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full rounded-lg"></iframe>
+            </div>
+    
+            <!-- Third Card: Text-based -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-2">Manage All Your Ongoing Maintenance Tasks</h2>
+                <p class="text-base text-gray-600 mb-4">Simplify your maintenance schedule with centralized task management. Reduce downtime, improve team collaboration, and elevate service quality with a bird's-eye view of your operations.</p>
+                <a href="{% url 'about' %}" class="inline-block px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded transition-all text-sm font-semibold">Learn More</a>
+            </div>
+    
+        </div>
+    </section>    
+    
+    <!--============================ Reviews section starts ================================-->
+    <section class="client-reviews" id="client-reviews">
+        <h1 class="heading">What our clients say!</h1>
+        <p class="heading-subtitle">
+            We don’t just serve clients; we build lasting partnerships with our esteemed clients. 
+            Together, we drive success, create impact, and achieve extraordinary results.
+        </p>
+        <div class="reviews-wrapper">
+            <div class="clients-container">
+                <div class="client-images">
+                    <img src="https://risersafe.com/wp-content/uploads/2023/04/RScircle_AM.webp" alt="Client 1" class="client-image active">
+                    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fmechanical&psig=AOvVaw26Tt17f1td1zbB89sY25kn&ust=1726240845392000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMCCwdLavYgDFQAAAAAdAAAAABAE" alt="Client 2" class="client-image">
+                    <img src="https://lh3.googleusercontent.com/proxy/dRg_NULMhgEbscQ8WLT7FRqKjl1n5Oby1GbgOkYt2u3_PPvapyijeTYRrXWIf-NTCw9caRysL-dTTSa8s7UN_BWX0WdYvwg0SvSz8Su6CwNqr7VXrhQ7ksRhQoLDzHu9FP9KcQ" alt="Client 3" class="client-image">
+                </div>
+                <div class="review-section">
+                    <p class="review-text">"This service has changed the way we do business. Highly recommend!"</p>
+                    <div class="client-info">
+                        <img src="./assets/review_img1.avif" alt="Client 1" class="client-info-image">
+                        <div class="client-details">
+                            <h3 class="client-name">Client Name</h3>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Navigation Arrows -->
+            <div class="left-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+                </svg>
+            </div>
+            <div class="right-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"/>
+                </svg>
+            </div>
+    
+            <!-- Navigation Buttons -->
+            <div class="navigationButtons">
+                <div class="left-arrow-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+                    </svg>
+                </div>
+                <div class="right-arrow-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"/>
+                    </svg>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-</footer>
-<script src="static/assets/js/popper.min.js"></script>
-<script src="static/bootstrap/js/bootstrap.min.js"></script>
+        </div>
+    </section>  
+    
+    <!--============================ Signup CTA Call up section ================================-->
+    <section class="bg-[#2c2c64] py-16">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-semibold text-white mb-6">Streamline Your Maintenance Management with M-Tambo</h2>
+            <p class="text-base text-white mb-8">Take control of your building maintenance processes with ease. M-Tambo CMMS offers powerful tools to manage tasks, track equipment, and optimize workflows efficiently.</p>
+            <div class="flex justify-center">
+                <button type="submit" class="bg-[#fc4b3b] px-6 py-3 text-white rounded-lg">Sign Up Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!--============================   Footer section ================================-->
+    <footer class="bg-dark py-10 text-white">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- M-TAMBO CMMS Info Section -->
+                <div class="py-3">
+                    <a href="#" class="font-bold text-2xl mb-4 inline-block text-light hover:text-opacity-80" target="_blank">M-TAMBO CMMS</a>
+                    <p class="mb-3">
+                        M-Tambo CMMS provides a comprehensive maintenance management platform for building owners, maintenance companies, and technicians across Africa. Streamline your operations and enhance productivity with our state-of-the-art software solutions.
+                    </p>
+                    <div class="mb-4">
+                        <a href="tel:+254123456789" class="text-light hover:text-opacity-80">+254 123 456 789</a> <br>
+                        <a href="mailto:support@m-tambo.com" class="text-light hover:text-opacity-80">support@m-tambo.com</a>
+                    </div>
+                </div>
+    
+                <!-- About Section -->
+                <div class="py-3">
+                    <h2 class="text-lg font-normal mb-4 uppercase">About</h2>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-light hover:text-opacity-80">Get a Quote</a></li>
+                        <li><a href="#" class="text-light hover:text-opacity-80">Enterprise Plan</a></li>
+                        <li><a href="#" class="text-light hover:text-opacity-80">Partners & Affiliates</a></li>
+                        <li><a href="#" class="text-light hover:text-opacity-80">Our Clients</a></li>
+                    </ul>
+                </div>
+    
+                <!-- Services Section -->
+                <div class="py-3">
+                    <h2 class="text-lg font-normal mb-4 uppercase">Services</h2>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-light hover:text-opacity-80">Asset Management</a></li>
+                        <li><a href="#" class="text-light hover:text-opacity-80">Preventive Maintenance</a></li>
+                        <li><a href="#" class="text-light hover:text-opacity-80">Work Order Tracking</a></li>
+                        <li><a href="#" class="text-light hover:text-opacity-80">Inventory Management</a></li>
+                        <li><a href="#" class="text-light hover:text-opacity-80">Reporting & Analytics</a></li>
+                    </ul>
+                </div>
+    
+                <!-- Subscribe & Social Section -->
+                <div class="py-3">
+                    <h2 class="text-lg font-normal mb-4 uppercase">Subscribe</h2>
+                    <p class="mb-3">Subscribe to our newsletter and get exclusive updates directly in your inbox.</p>
+                    <form class="mb-4">
+                        <div class="flex items-center bg-white rounded p-1">
+                            <input type="email" class="border-0 px-3 py-2 w-full text-gray-700" placeholder="Enter email..." required>
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded ml-2 hover:bg-blue-700" type="submit">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+                                    <path d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                    <h2 class="text-lg font-normal mb-3 uppercase">Get Social</h2>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-light hover:text-opacity-80" aria-label="facebook link">Facebook</a>
+                        <a href="#" class="text-light hover:text-opacity-80" aria-label="twitter link">Twitter</a>
+                        <a href="#" class="text-light hover:text-opacity-80" aria-label="linkedin link">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Bottom Row: Privacy Policy, Terms & Copyright -->
+            <div class="border-t border-gray-600 pt-6 mt-6">
+                <div class="flex justify-between items-center text-sm">
+                    <div>&copy; 2021 - 2024 | All Rights Reserved - M-TAMBO CMMS, Nairobi, Kenya</div>
+                    <div class="space-x-6">
+                        <a href="#" class="text-light hover:text-opacity-80">Privacy Policy</a>
+                        <a href="#" class="text-light hover:text-opacity-80">Terms of Use</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="static/assets/js/popper.min.js"></script>
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="static/js/home_page.js"></script>
 </body>
 </html>

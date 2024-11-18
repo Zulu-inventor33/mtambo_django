@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Your main CSS -->
+    <style>
+        /* Basic styles for layout */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Blurring background */
+        .blur-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1;
+        }
+
+        /* Modal styling */
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 2; /* Ensures the modal is above the blurred background */
+            width: 400px;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        /* Modal Header */
+        .modal h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Input fields styling */
+        .modal input {
+            width: 80%;
+            padding: 10px;
+            margin: 15px 0;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .modal button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 80%;
+        }
+
+        .modal button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Close button */
+        .modal .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .modal {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="blur-background"></div> <!-- Blur effect for background -->
+
+<!-- Modal -->
+<div class="modal">
+    <span class="close-btn" onclick="window.location.href='{% url 'signup' %}'">&times;</span> <!-- Close button -->
+    <h2>Email Verification</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button type="submit">Verify Code</button>
+    </form>
+    
+    <p>If you didn't receive the code, <a href="#">Resend</a></p>
+</div>
+
+<script>
+    // Open the modal when the page loads
+    window.onload = function() {
+        document.querySelector('.modal').style.display = 'block';
+        document.querySelector('.blur-background').style.display = 'block';
+    };
+
+    // Close the modal when the close button is clicked
+    document.querySelector('.close-btn').addEventListener('click', function() {
+        document.querySelector('.modal').style.display = 'none';
+        document.querySelector('.blur-background').style.display = 'none';
+    });
+</script>
+
+</body>
+</html>

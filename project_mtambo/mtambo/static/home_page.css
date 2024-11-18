@@ -1,0 +1,326 @@
+/*========================================================================================
+                            HEADER SECTION OF THE APPLICATION
+======================================================================================== */
+/* Background changes to white on scroll */
+.header-section.scrolled {
+    background-color: #fff;
+    border-bottom: 1px solid #000;
+}
+
+.desktop-link {
+position: relative;
+text-decoration: none;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 500;
+}
+
+.desktop-link::after {
+content: '';
+position: absolute;
+left: 0;
+right: 0;
+bottom: 0;
+height: 1px;
+background-color: white;
+width: 100%;
+transform: scaleX(0); /* Start with no width */
+transform-origin: left; /* Scale from the left */
+transition: transform 0.3 ease;
+}
+
+.desktop-link:hover::after {
+transform: scaleX(1); /* Expand to full width on hover */
+}
+  
+.desktop-link.active::after {
+content: '';
+position: absolute;
+left: 0;
+right: 0;
+bottom: 0; /* Position it below the text */
+height: 1px; /* Thickness of the underline */
+background-color: white; /* Underline color */
+width: 100%; /* Full width */
+transform: scaleX(1);
+}
+
+/*========================================================================================
+                            clients testimonials section
+======================================================================================== */
+:root {
+    --blue: #2d2d72;
+    --yellow: #f5bf23;
+    --black: #111;
+    --white: #fff;
+    --light-color: #585757;
+    --light-bg: #eee;
+    --box-shadow: 0 0.5rem 1rem rgba(0,0,0,.1);
+    --border: .1rem solid rgba(0,0,0,.3);
+}
+
+/*==========================================================================================
+                                REVIEWS SECTION STARTS
+===========================================================================================*/
+.client-reviews {
+    position: relative;
+    background-color: var(--white);
+    text-align: center;
+    padding-bottom: 3rem;
+}
+
+.client-reviews .heading {
+    display: inline-block;
+    margin: 2rem 0;
+    width: auto;
+    font-size: 1.5rem;
+    color: var(--black);
+    text-transform: capitalize;
+    padding-left: 1rem;
+}
+
+.client-reviews .heading-subtitle {
+    max-width: 100%;
+    font-size: 1rem;
+    color: #555;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.client-reviews .reviews-wrapper {
+    position: relative;
+}
+
+.client-reviews .reviews-wrapper .right-arrow {
+    position: absolute;
+    top: 17rem;
+    right: 17rem;
+    background: var(--blue);
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.client-reviews .reviews-wrapper .right-arrow:hover {
+    background: var(--yellow);
+}
+
+.client-reviews .reviews-wrapper .left-arrow {
+    position: absolute;
+    top: 17rem;
+    left: 17rem;
+    background: var(--blue);
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.client-reviews .reviews-wrapper .left-arrow:hover {
+    background: var(--yellow);
+}
+
+.client-reviews .clients-container {
+    padding-top: 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.client-reviews .clients-container .client-images {
+    display: flex;
+    position: relative;
+    margin-bottom: 4rem;
+}
+
+.client-reviews .clients-container .client-images .client-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 0.6rem;
+    transition: transform 0.3s;
+    object-fit: cover;
+}
+
+.client-reviews .clients-container .client-images .client-image.active {
+    transform: scale(1.2);
+    opacity: 1;
+    box-shadow: var(--box-shadow);
+    border: 3px solid #f5bf23;
+}
+
+.client-reviews .clients-container .review-section {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+}
+
+.client-reviews .clients-container .review-section .review-text {
+    font-size: 1.4rem;
+    color: var(--black);
+    margin-bottom: 2rem;
+}
+
+.client-reviews .clients-container .review-section .client-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    float: left;
+}
+
+.review-section .client-info .client-info-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 1rem;
+    object-fit: cover;
+}
+
+.review-section .client-info .client-details {
+    text-align: left;
+}
+
+.review-section .client-info .client-details .client-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--blue);
+}
+
+.review-section .client-info .client-details .stars {
+    font-size: 1.2rem;
+    color: #FFD700;
+}
+
+.reviews-wrapper .navigationButtons {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.reviews-wrapper .navigationButtons .left-arrow-btn,
+.reviews-wrapper .navigationButtons .right-arrow-btn {
+    background: var(--blue);
+    color: var(--white);
+    width: 80px;
+    height: 40px;
+    border-radius: 5px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.reviews-wrapper .navigationButtons .left-arrow-btn:hover {
+    background: var(--yellow);
+}
+.reviews-wrapper .navigationButtons .right-arrow-btn:hover {
+    background: var(--yellow);
+}
+
+/* Styling for the new Client Logos section */
+.client-logos {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.client-logos h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.logos-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 11px;
+}
+
+.logos-container .client-card {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    padding: 10px;
+    width: 150px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: var(--light-gray);
+}
+
+.logos-container .client-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.logos-container .client-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Desktop screens */
+@media (min-width: 1024px) {
+    .client-reviews .heading-subtitle {
+        max-width: 800px;
+    }
+}
+
+@media (max-width: 991px) {
+    .client-reviews .heading-subtitle {
+        max-width: 800px;
+        font-size: 1.4rem;
+    }
+
+    /* reviews section */
+    .client-reviews .reviews-wrapper .left-arrow,
+    .client-reviews .reviews-wrapper .right-arrow {
+        display: none;
+    }
+
+    .reviews-wrapper .navigationButtons {
+        display: flex;
+    }
+
+    .reviews-wrapper .navigationButtons .left-arrow-btn,
+    .reviews-wrapper .navigationButtons .right-arrow-btn {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 450px) {
+    html {
+        font-size: 65%;
+    }
+
+    /* reviews section */
+    .client-reviews .clients-container .client-images .client-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+
+    .client-logo {
+        max-width: 100px;
+    }
+
+    .logos-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

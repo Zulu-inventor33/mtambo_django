@@ -1,274 +1,335 @@
-{% extends 'base.html' %}
+{% load static %}
 
-{% block content %}
-<div class="d-flex justify-content-center align-items-center login-page-body">
-    <div class="login-container">
-        <label for="show" class="close-btn fas fa-times" title="close"></label>
-        <div class="text">Signup Form</div>
-        <form action="{% url 'signup' %}" method="post" onsubmit="return validatePassword()">
-            {% csrf_token %}
-            
-            <!-- First Name -->
-            <div class="data">
-                <label for="first_name">First Name<span class="required">*</span>:</label>
-                {{ form.first_name }}
-                {% if form.first_name.errors %}
-                    <div class="error">
-                        {% for error in form.first_name.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta Tags for proper character set and responsiveness -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <title>M-TAMBO | Login & Signup</title>
+
+    <!-- Load static files (CSS and others) -->
+    {% load static %}
+    <link href="{% static 'login_reg.css' %}" rel="stylesheet">
+
+    <!-- Additional meta information (if any) -->
+    <meta name="description" content="M-TAMBO Login and Signup page">
+</head>
+
+<body>
+
+    <!-- Main container for the page -->
+    <div class="login_reg_wrapper">
+        <!-- Brand name with link to homepage -->
+        <div class="brand-name">
+            <a href="{% url 'index' %}">
+                <span>M-TAMBO</span>
+            </a>
+        </div>
+
+        <!-- Toggle buttons for switching between login and register -->
+        <div class="toggle_container">
+            <label for="flip" class="registerBtn">Register</label>
+            <label for="flip" class="loginBtn">Login</label>
+        </div>
+
+        <!-- Main container for the forms -->
+        <div class="container">
+            <!-- Checkbox for toggling between the forms -->
+            <input type="checkbox" id="flip">
+
+            <!-- Cover section with background images for front and back views -->
+            <div class="cover">
+                <div class="front">
+                    <img src="{% static 'images/lift1.jpg' %}" alt="">
+                    <div class="text">
+                        <span class="text-1">Every new friend is a <br> new adventure</span>
+                        <span class="text-2">Let's get connected</span>
                     </div>
-                {% endif %}
-            </div>
-            
-            <!-- Last Name -->
-            <div class="data">
-                <label for="last_name">Last Name<span class="required">*</span>:</label>
-                {{ form.last_name }}
-                {% if form.last_name.errors %}
-                    <div class="error">
-                        {% for error in form.last_name.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
+                </div>
+                <div class="back">
+                    <img class="backImg" src="{% static 'images/lift1.jpg' %}" alt="">
+                    <div class="text">
+                        <span class="text-1">Complete miles of journey <br> with one step</span>
+                        <span class="text-2">Let's get started</span>
                     </div>
-                {% endif %}
-            </div>
-            
-            <!-- Email -->
-            <div class="data">
-                <label for="email">Email<span class="required">*</span>:</label>
-                {{ form.email }}
-                {% if form.email.errors %}
-                    <div class="error">
-                        {% for error in form.email.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-            
-            <!-- Phone Number -->
-            <div class="data">
-                <label for="phone_number">Phone Number<span class="required">*</span>:</label>
-                {{ form.phone_number }}
-                {% if form.phone_number.errors %}
-                    <div class="error">
-                        {% for error in form.phone_number.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-
-            <!-- Password -->
-            <div class="form-group data">
-                <label for="password">Password<span class="required">*</span>:</label>
-                {{ form.password }}
-                {% if form.password.errors %}
-                    <div class="error">
-                        {% for error in form.password.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="form-group data">
-                <label for="confirm_password">Confirm Password<span class="required">*</span>:</label>
-                {{ form.confirm_password }}
-                {% if form.confirm_password.errors %}
-                    <div class="error">
-                        {% for error in form.confirm_password.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-
-            <!-- Password Mismatch Error -->
-            <div id="password-error" class="error-message" style="display: none;">Passwords do not match.</div>
-
-            <!-- Account Type -->
-            <div class="data">
-                <label for="accountType">You are registering to M-TAMBO as?<span class="required">*</span>:</label>
-                {{ form.accountType }}
-                {% if form.accountType.errors %}
-                    <div class="error">
-                        {% for error in form.accountType.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-
-            <!-- Developer/Building Owner Fields -->
-            <div id="developer-fields" class="additional-fields" style="display: none;">
-                <div class="data">
-                    <label for="developer_name">Developer Name/Individual Name<span class="required">*</span>:</label>
-                    {{ form.developer_name }}
-                    {% if form.developer_name.errors %}
-                        <div class="error">
-                            {% for error in form.developer_name.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="data">
-                    <label for="address">Address</label>
-                    {{ form.address }}
-                    {% if form.address.errors %}
-                        <div class="error">
-                            {% for error in form.address.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
                 </div>
             </div>
 
-            <!-- Maintenance Provider Fields -->
-            <div id="maintenance-fields" class="additional-fields" style="display: none;">
-                <div class="data">
-                    <label for="specialization">Equipment Specialization<span class="required">*</span>:</label>
-                    {{ form.specialization }}
-                    {% if form.specialization.errors %}
-                        <div class="error">
-                            {% for error in form.specialization.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="data">
-                    <label for="company_name">Company Name<span class="required">*</span>:</label>
-                    {{ form.company_name }}
-                    {% if form.company_name.errors %}
-                        <div class="error">
-                            {% for error in form.company_name.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="data">
-                    <label for="company_address">Company Address</label>
-                    {{ form.company_address }}
-                    {% if form.company_address.errors %}
-                        <div class="error">
-                            {% for error in form.company_address.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="data">
-                    <label for="company_registration_number">Company Registration Number<span class="required">*</span>:</label>
-                    {{ form.company_registration_number }}
-                    {% if form.company_registration_number.errors %}
-                        <div class="error">
-                            {% for error in form.company_registration_number.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
+            <!-- Form container -->
+            <div class="forms">
+                <div class="form-content">
 
-            <!-- Technician Fields -->
-            <div id="technician-fields" class="additional-fields" style="display: none;">
-                <div class="data">
-                    <label for="equip_specialization">Equipment Specialization<span class="required">*</span>:</label>
-                    {{ form.equip_specialization }}
-                    {% if form.equip_specialization.errors %}
-                        <div class="error">
-                            {% for error in form.equip_specialization.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                    <!-- Signup Form Section -->
+                    <div class="signup-form">
+                        <div class="title">Signup</div>
+                        <form action="{% url 'signup' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="input-boxes">
+                    
+                                <!-- First Name -->
+                                <div class="input-box">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" name="first_name" placeholder="Enter your first name" value="{{ form.first_name.value }}" required>
+                                    {% if form.first_name.errors %}
+                                        <div class="error">
+                                            {% for error in form.first_name.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                    
+                                <!-- Last Name -->
+                                <div class="input-box">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" name="last_name" placeholder="Enter your last name" value="{{ form.last_name.value }}" required>
+                                    {% if form.last_name.errors %}
+                                        <div class="error">
+                                            {% for error in form.last_name.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                    
+                                <!-- Email -->
+                                <div class="input-box">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" name="email" placeholder="Enter your email" value="{{ form.email.value }}" required>
+                                    {% if form.email.errors %}
+                                        <div class="error">
+                                            {% for error in form.email.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                    
+                                <!-- Phone Number -->
+                                <div class="input-box">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="tel" name="phone_number" placeholder="Enter your phone number" value="{{ form.phone_number.value }}" required>
+                                    {% if form.phone_number.errors %}
+                                        <div class="error">
+                                            {% for error in form.phone_number.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                    
+                                <!-- Password -->
+                                <div class="input-box">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" name="password" placeholder="Enter your password" required>
+                                    {% if form.password.errors %}
+                                        <div class="error">
+                                            {% for error in form.password.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                    
+                                <!-- Confirm Password -->
+                                <div class="input-box">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" name="confirm_password" placeholder="Confirm your password" required>
+                                    {% if form.confirm_password.errors %}
+                                        <div class="error">
+                                            {% for error in form.confirm_password.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                    
+                                <!-- Password Mismatch Error -->
+                                <div id="password-error" class="error-message" style="display: none;">Passwords do not match.</div>
+                    
+                                <!-- Account Type -->
+                                <div class="input-box">
+                                    <i class="fas fa-user-tag"></i>
+                                    <select name="accountType" id="accountType" required>
+                                        <option value="">Select your account type</option>
+                                        <option value="developer">Developer</option>
+                                        <option value="maintenance_provider">Maintenance Provider</option>
+                                        <option value="technician">Technician</option>
+                                    </select>
+                                    {% if form.accountType.errors %}
+                                        <div class="error">
+                                            {% for error in form.accountType.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                    
+                                <!-- Developer Fields -->
+                                <div id="developer-fields" class="additional-fields" style="display: none;">
+                                    <div class="input-box">
+                                        <i class="fas fa-building"></i>
+                                        <input type="text" name="developer_name" placeholder="Developer Name/Individual Name" value="{{ form.developer_name.value }}">
+                                        {% if form.developer_name.errors %}
+                                            <div class="error">
+                                                {% for error in form.developer_name.errors %}
+                                                    <p>{{ error }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="input-box">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <input type="text" name="address" placeholder="Address" value="{{ form.address.value }}">
+                                        {% if form.address.errors %}
+                                            <div class="error">
+                                                {% for error in form.address.errors %}
+                                                    <p>{{ error }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                    
+                                <!-- Maintenance Provider Fields -->
+                                <div id="maintenance-fields" class="additional-fields" style="display: none;">
+                                    <div class="input-box">
+                                        <i class="fas fa-tools"></i>
+                                        <select name="specialization" required>
+                                            <option value="">Select Equipment Specialization</option>
+                                            <option value="HVAC">HVAC</option>
+                                            <option value="Elevators">Elevators</option>
+                                            <option value="Generators">Power Back-up Generators</option>
+                                        </select>
+                                        {% if form.specialization.errors %}
+                                            <div class="error">
+                                                {% for error in form.specialization.errors %}
+                                                    <p>{{ error }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="input-box">
+                                        <i class="fas fa-building"></i>
+                                        <input type="text" name="company_name" placeholder="Company Name" value="{{ form.company_name.value }}" required>
+                                        {% if form.company_name.errors %}
+                                            <div class="error">
+                                                {% for error in form.company_name.errors %}
+                                                    <p>{{ error }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="input-box">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <input type="text" name="company_address" placeholder="Company Address" value="{{ form.company_address.value }}">
+                                        {% if form.company_address.errors %}
+                                            <div class="error">
+                                                {% for error in form.company_address.errors %}
+                                                    <p>{{ error }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="input-box">
+                                        <i class="fas fa-id-badge"></i>
+                                        <input type="text" name="company_registration_number" placeholder="Company Registration Number" value="{{ form.company_registration_number.value }}" required>
+                                        {% if form.company_registration_number.errors %}
+                                            <div class="error">
+                                                {% for error in form.company_registration_number.errors %}
+                                                    <p>{{ error }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                    
+                                <!-- Technician Fields -->
+                                <div id="technician-fields" class="additional-fields" style="display: none;">
+                                    <div class="input-box">
+                                        <i class="fas fa-tools"></i>
+                                        <select name="specialization" required>
+                                            <option value="">Select Equipment Specialization</option>
+                                            <option value="HVAC">HVAC</option>
+                                            <option value="Elevators">Elevators</option>
+                                            <option value="Generators">Power Back-up Generators</option>
+                                        </select>
+                                        {% if form.specialization.errors %}
+                                            <div class="error">
+                                                {% for error in form.specialization.errors %}
+                                                    <p>{{ error }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                    
+                                    <!-- Maintenance Company Dropdown-->
+                                    <div class="input-box">
+                                        <i class="fas fa-building"></i>
+                                        <select name="maintenance_company_id" required>
+                                            <option value="">Select Maintenance Company</option>
+                                            {% for company in form.maintenance_company_id.choices %}
+                                                <option value="{{ company.0 }}">{{ company.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        {% if form.maintenance_company_id.errors %}
+                                            <div class="error">
+                                                {% for error in form.maintenance_company_id.errors %}
+                                                    <p>{{ error }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                    
+                                <!-- Submit Button -->
+                                <div class="input-box button">
+                                    <input type="submit" value="Signup">
+                                </div>
+                    
+                                <!-- Sign-up navigation link to login -->
+                                <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
+                    
+                            </div>
+                        </form>
+                    </div>                    
                 </div>
-
-                <!-- Maintenance Company Dropdown-->
-                <div id="maintenance-company-fields" class="data">
-                    <label for="maintenance_company_id">Select Maintenance Company<span class="required">*</span>:</label>
-                    {{ form.maintenance_company_id }}
-                    {% if form.maintenance_company_id.errors %}
-                        <div class="error">
-                            {% for error in form.maintenance_company_id.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
             </div>
-
-            <!-- Submit Button -->
-            <div class="btn">
-                <div class="inner"></div>
-                <button type="submit">Signup</button>
-            </div>
-            <div class="signup-link">
-                Already a member? <a href="{% url 'login' %}">Login here</a>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<script>
-    function handleAccountTypeChange() {
-        var accountType = document.getElementById('accountType').value;
-        document.querySelectorAll('.additional-fields').forEach(function(el) {
-            el.style.display = 'none';
-            el.querySelectorAll('input, select').forEach(function(field) {
-                field.required = false;
+    <script>
+        document.getElementById('accountType').addEventListener('change', function() {
+            let accountType = this.value;
+        
+            // Hide all additional fields
+            document.querySelectorAll('.additional-fields').forEach(function(field) {
+                field.style.display = 'none';
+                
+                // Remove the 'required' attribute from hidden fields
+                let inputs = field.querySelectorAll('[required]');
+                inputs.forEach(input => input.removeAttribute('required'));
             });
+        
+            // Show relevant fields based on the selected account type
+            if (accountType === 'developer') {
+                document.getElementById('developer-fields').style.display = 'block';
+                document.querySelectorAll('#developer-fields [required]').forEach(input => input.setAttribute('required', 'true'));
+            } else if (accountType === 'maintenance_provider') {
+                document.getElementById('maintenance-fields').style.display = 'block';
+                document.querySelectorAll('#maintenance-fields [required]').forEach(input => input.setAttribute('required', 'true'));
+            } else if (accountType === 'technician') {
+                document.getElementById('technician-fields').style.display = 'block';
+                document.querySelectorAll('#technician-fields [required]').forEach(input => input.setAttribute('required', 'true'));
+            }
         });
+    </script>
 
-        if (accountType === 'developer') {
-            var developerFields = document.getElementById('developer-fields');
-            developerFields.style.display = 'block';
-            developerFields.querySelectorAll('input').forEach(function(field) {
-                field.required = true;
-            });
-        } else if (accountType === 'maintenance') {
-            var maintenanceFields = document.getElementById('maintenance-fields');
-            maintenanceFields.style.display = 'block';
-            maintenanceFields.querySelectorAll('input, select').forEach(function(field) {
-                field.required = true;
-            });
-        } else if (accountType === 'technician') {
-            var technicianFields = document.getElementById('technician-fields');
-            technicianFields.style.display = 'block';
-            technicianFields.querySelectorAll('input, select').forEach(function(field) {
-                field.required = true;
-            });
-        }
-    }
+</body>
 
-    document.getElementById('equip_specialization').addEventListener('change', function() {
-        const specialization = this.value;
-        const companyDropdown = document.getElementById('maintenance_company_id');
+</html>
 
-        companyDropdown.innerHTML = '<option value="" disabled selected>Select a company</option>';
-
-        fetch(`/get_companies?specialization=${specialization}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.companies.length > 0) {
-                    data.companies.forEach(company => {
-                        const option = document.createElement('option');
-                        option.value = company.id;
-                        option.textContent = company.company_name;
-                        companyDropdown.appendChild(option);
-                    });
-                } else {
-                    window.location.reload();
-                }
-            })
-            .catch(error => console.error('Error fetching companies:', error));
-    });
-</script>
-
-{% endblock %}

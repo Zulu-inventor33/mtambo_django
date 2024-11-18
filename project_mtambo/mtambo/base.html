@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pinegrow Web Editor - SAAS Bootstrap v5 Template">
+    <meta name="author" content="">
+    <title>{% block title %}Mtambo | CMMS{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'blocks.css' %}">
+    <link href="{% static 'style.css' %}" rel="stylesheet">
+    <link href="{% static 'tailwind.css' %}" rel="stylesheet">
+    <link href="{% static 'home_page.css' %}" rel="stylesheet">
+    <link href="{% static 'index.css' %}" rel="stylesheet">
+
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    <!-- Navbar (Header) -->
+    <header id="header-section" class="header-section w-full h-[64px] flex justify-center fixed top-0 left-0 z-50 transition-all duration-200">
+        <div class="container mx-auto flex justify-between items-center px-4 md:px-6">
+            <!-- Logo and Company Name -->
+            <a href="{% url 'index' %}" class="flex items-center space-x-4 cursor-pointer">
+                <span id="logo-name" class="hidden md:block text-primary text-xl font-semibold transition-colors duration-200">M-TAMBO</span>
+            </a>
+
+            <!-- Navigation Links for Desktop Menu -->
+            <nav class="hidden md:flex space-x-6 tracking-tight">
+                <a href="{% url 'index' %}" class="desktop-link text-white transition-colors duration-300">Home</a>
+                <a href="{% url 'about' %}" class="desktop-link text-white transition-colors duration-300">About Us</a>
+                <a href="{% url 'dashboard' %}" class="desktop-link text-white transition-colors duration-300">Dashboard</a>
+                <div class="relative">
+                    <button class="desktop-link text-white flex items-center">
+                        Services
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="absolute hidden right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg transition-opacity duration-200 ease-in-out">
+                        <a href="{% url 'elevators' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200">Elevators</a>
+                        <a href="{% url 'generators' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200">Power Back-up Generators</a>
+                        <a href="{% url 'hvac' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200">HVAC systems</a>
+                    </div>
+                </div>
+                <a href="{% url 'contact' %}" class="desktop-link text-white transition-colors duration-300">Contact Us</a>
+            </nav>
+
+            <!-- User Account Section for Desktop -->
+            <div class="relative hidden md:block">
+                {% if user.is_authenticated %}
+                    <div class="desktop-link">
+                        <button id="user-account-btn" class="flex items-center focus:outline-none">
+                            <img src="{{ user.profile_pic.url }}" alt="User Profile" class="h-10 w-10 rounded-full">
+                            <span class="ml-2">{{ user.username }}</span>
+                        </button>
+                    </div>
+                    <!-- Dropdown menu for authenticated users -->
+                    <div id="user-account-dropdown" class="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg hidden transition-opacity duration-200 ease-in-out">
+                        <div class="py-2">
+                            <a href="{% url 'dashboard' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200">Dashboard</a>
+                            <a href="{% url 'logout' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-200">Log Out</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'login' %}" class="bg-[#fc4b3b] text-white py-2 px-4 rounded-md hover:bg-[#fc4b3b]/90">
+                        Log In
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    {% block content %}
+    <!-- Page-specific content will be injected here -->
+    {% endblock %}
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between">
+                <div class="text-lg font-bold">M-TAMBO CMMS</div>
+                <div class="flex space-x-6">
+                    <a href="{% url 'about' %}" class="hover:text-gray-400">About Us</a>
+                    <a href="{% url 'contact' %}" class="hover:text-gray-400">Contact</a>
+                    <a href="{% url 'privacy_policy' %}" class="hover:text-gray-400">Privacy Policy</a>
+                </div>
+            </div>
+            <div class="mt-6 text-center text-sm text-gray-400">
+                <p>&copy; 2024 M-TAMBO CMMS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Optional: Scripts -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const accountTypeSelect = document.querySelector("select[name='account_type']");
+            const developerFields = document.getElementById("developer-fields");
+            const maintenanceFields = document.getElementById("maintenance-fields");
+
+            // Function to toggle visibility based on account type selection
+            function toggleFields() {
+                const selectedType = accountTypeSelect.value;
+
+                // Hide all additional fields first
+                developerFields.style.display = "none";
+                maintenanceFields.style.display = "none";
+
+                // Show the relevant fields
+                if (selectedType === 'developer') {
+                    developerFields.style.display = "block";
+                } else if (selectedType === 'maintenance') {
+                    maintenanceFields.style.display = "block";
+                }
+            }
+
+            // Add event listener for the change event
+            accountTypeSelect.addEventListener("change", toggleFields);
+
+            // Initial check on page load
+            toggleFields();
+        });
+    </script>
+
+</body>
+
+</html>

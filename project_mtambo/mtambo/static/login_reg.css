@@ -1,0 +1,359 @@
+/* Global styles */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+/* Main wrapper */
+.login_reg_wrapper {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    overflow-x: hidden;
+}
+
+/* Brand Name */
+.login_reg_wrapper .brand-name {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 16px 12px;
+    background: #fc4b3b;
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Toggle container */
+.login_reg_wrapper .toggle_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 250px;
+    margin: 12px auto;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Toggle button styles */
+.login_reg_wrapper .toggle_container label {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.registerBtn {
+    background-color: #2c2c64;
+    color: white;
+}
+
+.loginBtn {
+    background-color: #fc4b3b;
+    color: white;
+}
+
+label:hover {
+    opacity: 0.8;
+}
+
+label:active {
+    transform: scale(0.98); /* Slightly shrink on click */
+}
+
+/* Container for the forms */
+.login_reg_wrapper .container {
+    position: relative;
+    max-width: 850px;
+    width: 100%;
+    background: #fff;
+    padding: 40px 30px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    perspective: 2700px;
+}
+
+/* Cover styles for the flip effect */
+.login_reg_wrapper .container .cover {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 50%;
+    z-index: 98;
+    transition: all 1s ease;
+    transform-origin: left;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+.container #flip:checked ~ .cover {
+    transform: rotateY(-180deg);
+}
+
+/* Flip backface effect */
+.container .cover .front,
+.container .cover .back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.cover .back {
+    transform: rotateY(180deg);
+}
+
+/* Cover image styles */
+.container .cover img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    z-index: 10;
+}
+
+/* Cover text styles */
+.container .cover .text {
+    position: absolute;
+    z-index: 10;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container .cover .text::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0.6;
+    background: #333;
+}
+
+.cover .text .text-1,
+.cover .text .text-2 {
+    z-index: 20;
+    font-size: 26px;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+}
+
+.cover .text .text-2 {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* Forms container */
+.container .forms {
+    height: 100%;
+    width: 100%;
+    background: #fff;
+}
+
+.container .form-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Forms - login and signup styles */
+.form-content .login-form,
+.form-content .signup-form {
+    width: calc(100% / 2 - 25px); /* 50% width on larger screens */
+}
+
+/* Form content title styles */
+.forms .form-content .title {
+    position: relative;
+    font-size: 24px;
+    font-weight: 500;
+    color: #333;
+}
+
+.forms .form-content .title:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 25px;
+    background: #fc4b3b;
+}
+
+.forms .signup-form .title:before {
+    width: 20px;
+}
+
+/* Input fields and buttons */
+.forms .form-content .input-boxes {
+    margin-top: 30px;
+}
+
+.forms .form-content .input-box {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    margin: 10px 0;
+    position: relative;
+}
+
+.form-content .input-box input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 0 30px;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.form-content .input-box input:focus,
+.form-content .input-box input:valid {
+    border-color: #fc4b3b;
+}
+
+.form-content .input-box i {
+    position: absolute;
+    color: #fc4b3b;
+    font-size: 17px;
+}
+
+/* Text styles */
+.forms .form-content .text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.forms .form-content .text a {
+    text-decoration: none;
+}
+
+.forms .form-content .text a:hover {
+    text-decoration: underline;
+}
+
+/* Button styles */
+.forms .form-content .button {
+    color: #fff;
+    margin-top: 40px;
+}
+
+.forms .form-content .button input {
+    color: #fff;
+    background: #7d2ae8;
+    border-radius: 6px;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.forms .form-content .button input:hover {
+    background: #5b13b9;
+}
+
+.forms .form-content label {
+    color: #5b13b9;
+    cursor: pointer;
+}
+
+.forms .form-content label:hover {
+    text-decoration: underline;
+}
+
+.forms .form-content .login-text,
+.forms .form-content .sign-up-text {
+    text-align: center;
+    margin-top: 25px;
+}
+
+/* Hidden checkbox for flip effect */
+.container #flip {
+    display: none;
+}
+
+/* ========================== Responsive Styles for smaller screens ========================== */
+@media (max-width: 768px) {
+    /* Hide the cover for smaller screens */
+    .container .cover {
+        display: none;
+    }
+
+    /* Full-width for forms */
+    .form-content .login-form,
+    .form-content .signup-form {
+        width: 100%;
+        display: none; /* Hide both forms by default */
+    }
+
+    /* Show login form when #flip is unchecked */
+    .container #flip:not(:checked) ~ .forms .login-form {
+        display: block;
+    }
+
+    /* Show signup form when #flip is checked */
+    .container #flip:checked ~ .forms .signup-form {
+        display: block;
+    }
+
+    .container #flip:checked ~ .forms .login-form {
+        display: none;
+    }
+
+    /* Adjust form title and input styles for mobile */
+    .forms .form-content .title {
+        font-size: 22px;
+    }
+
+    .form-content .input-box input {
+        font-size: 14px;
+    }
+
+    .form-content .button input {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    /* Toggle button adjustments for mobile */
+    .login_reg_wrapper .toggle_container {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-content .input-box input {
+        font-size: 12px;
+    }
+
+    .form-content .button input {
+        font-size: 14px;
+        padding: 12px;
+    }
+}

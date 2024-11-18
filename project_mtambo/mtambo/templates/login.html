@@ -1,61 +1,227 @@
-{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<!-- Login Container -->
-<div class="d-flex justify-content-center align-items-center login-page-body">
-    <div class="login-container">
-        <label for="show" class="close-btn fas fa-times" title="close"></label>
-        <div class="text">Login Form</div>
-        <form action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-            
-            <!-- Email or Phone Input -->
-            <div class="data">
-                <label for="email">Email or Phone</label>
-                <input type="text" id="email" name="email" required>
-                <!-- Display error message for email/phone -->
-                {% if form.email.errors %}
-                    <div class="error">
-                        {% for error in form.email.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
+<head>
+    <!-- Meta Tags for proper character set and responsiveness -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <title>M-TAMBO | Login & Signup</title>
+
+    <!-- Load static files (CSS and others) -->
+    <link href="{% static 'login_reg.css' %}" rel="stylesheet">
+
+    <!-- Additional meta information (if any) -->
+    <meta name="description" content="M-TAMBO Login and Signup page">
+</head>
+
+<body>
+
+    <!-- Main container for the page -->
+    <div class="login_reg_wrapper">
+        <!-- Brand name with link to homepage -->
+        <div class="brand-name">
+            <a href="{% url 'index' %}">
+                <span>M-TAMBO</span>
+            </a>
+        </div>
+
+        <!-- Toggle buttons for switching between login and register -->
+        <div class="toggle_container">
+            <label for="flip" class="registerBtn">Register</label>
+            <label for="flip" class="loginBtn">Login</label>
+        </div>
+
+        <!-- Main container for the forms -->
+        <div class="container">
+            <!-- Checkbox for toggling between the forms -->
+            <input type="checkbox" id="flip">
+
+            <!-- Cover section with background images for front and back views -->
+            <div class="cover">
+                <div class="front">
+                    <img src="{% static 'images/lift1.jpg' %}" alt="">
+                    <div class="text">
+                        <span class="text-1">Every new friend is a <br> new adventure</span>
+                        <span class="text-2">Let's get connected</span>
                     </div>
-                {% endif %}
-            </div>
-            
-            <!-- Password Input -->
-            <div class="data">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-                <!-- Display error message for password -->
-                {% if form.password.errors %}
-                    <div class="error">
-                        {% for error in form.password.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
+                </div>
+                <div class="back">
+                    <img class="backImg" src="{% static 'images/lift1.jpg' %}" alt="">
+                    <div class="text">
+                        <span class="text-1">Complete miles of journey <br> with one step</span>
+                        <span class="text-2">Let's get started</span>
                     </div>
-                {% endif %}
+                </div>
             </div>
-            
-            <div class="forgot-pass">
-                <a href="{% url 'forgot_password' %}">Forgot Password?</a>
+
+            <!-- Form container -->
+            <div class="forms">
+                <div class="form-content">
+
+                    <!-- Login Form Section -->
+                    <div class="login-form">
+                        <div class="title">Login</div>
+                        <form action="{% url 'login' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="input-boxes">
+                                <!-- Email -->
+                                <div class="input-box">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" name="email" placeholder="Enter your email" value="{{ form.email.value }}" required>
+                                    {% if form.email.errors %}
+                                        <div class="error">
+                                            {% for error in form.email.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Password -->
+                                <div class="input-box">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" name="password" placeholder="Enter your password" required>
+                                    {% if form.password.errors %}
+                                        <div class="error">
+                                            {% for error in form.password.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="text"><a href="#">Forgot password?</a></div>
+                                
+                                <div class="button input-box">
+                                    <input type="submit" value="Submit">
+                                </div>
+                                
+                                <!-- Signup Link to toggle the form -->
+                                <div class="text sign-up-text">Don't have an account? <label for="flip">Sign up now</label></div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Signup Form Section -->
+                    <div class="signup-form">
+                        <div class="title">Signup</div>
+                        <form action="{% url 'signup' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="input-boxes">
+                    
+                                <!-- First Name -->
+                                <div class="input-box">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" name="first_name" placeholder="Enter your first name" value="{{ form.first_name.value }}" required>
+                                    {% if form.first_name.errors %}
+                                        <div class="error">
+                                            {% for error in form.first_name.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                    
+                                <!-- Last Name -->
+                                <div class="input-box">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" name="last_name" placeholder="Enter your last name" value="{{ form.last_name.value }}" required>
+                                    {% if form.last_name.errors %}
+                                        <div class="error">
+                                            {% for error in form.last_name.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                    
+                                <!-- Email -->
+                                <div class="input-box">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" name="email" placeholder="Enter your email" value="{{ form.email.value }}" required>
+                                    {% if form.email.errors %}
+                                        <div class="error">
+                                            {% for error in form.email.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                    
+                                <!-- Phone Number -->
+                                <div class="input-box">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="tel" name="phone_number" placeholder="Enter your phone number" value="{{ form.phone_number.value }}" required>
+                                    {% if form.phone_number.errors %}
+                                        <div class="error">
+                                            {% for error in form.phone_number.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                    
+                                <!-- Password -->
+                                <div class="input-box">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" name="password" placeholder="Enter your password" required>
+                                    {% if form.password.errors %}
+                                        <div class="error">
+                                            {% for error in form.password.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                    
+                                <!-- Confirm Password -->
+                                <div class="input-box">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" name="confirm_password" placeholder="Confirm your password" required>
+                                    {% if form.confirm_password.errors %}
+                                        <div class="error">
+                                            {% for error in form.confirm_password.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                    
+                                <!-- Password Mismatch Error -->
+                                <div id="password-error" class="error-message" style="display: none;">Passwords do not match.</div>
+                    
+                                <!-- Submit Button -->
+                                <div class="input-box button">
+                                    <input type="submit" value="Signup">
+                                </div>
+                    
+                                <!-- Login Link to toggle the form -->
+                                <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
+                    
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
             </div>
-            
-            <div class="btn">
-                <div class="inner"></div>
-                <button type="submit">Login</button>
-            </div>
-            
-            <div class="signup-link">
-                Not a member? <a href="{% url 'signup' %}">Signup now</a>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-{% endblock %}
 
-<!-- Bootstrap JS and dependencies -->
-{% block scripts %}
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-{% endblock %}
+    <script>
+        // JavaScript to handle password mismatch error
+        document.querySelector('form[name="signup"]').addEventListener('submit', function(e) {
+            var password = document.querySelector('input[name="password"]').value;
+            var confirmPassword = document.querySelector('input[name="confirm_password"]').value;
+            if (password !== confirmPassword) {
+                document.getElementById('password-error').style.display = 'block';
+                e.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
