@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skymax Elevators Maintenance Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>Skymax Elevators</h2>
+        </div>
+        <ul>
+            <li><a href="#home" class="active">Dashboard/Home</a></li>
+            <li><a href="#buildings">Buildings</a></li>
+            <li><a href="#technicians">Technicians</a></li>
+            <li><a href="#calendar">Calendar</a></li>
+            <li><a href="#reports">Reports</a></li>
+            <li><a href="#alerts">Alerts</a></li>
+            <li><a href="#claims">Claims</a></li>
+            <li><a href="#issues">Logged Issues</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <!-- Header -->
+        <header>
+            <h1>Skymax Elevators Maintenance Dashboard</h1>
+            <div class="header-buttons">
+                <button id="add-building-btn">Add Building</button>
+                <button id="add-lift-btn">Add Lift</button>
+                <button id="add-technician-btn">Add Technician</button>
+                <button id="remove-technician-btn">Remove Technician</button>
+            </div>
+        </header>
+
+        <!-- Dashboard/Home Page -->
+        <section id="home">
+            <div class="card">
+                <h2>Today's Jobs</h2>
+                <label for="filter-date">Filter by Date: </label>
+                <input type="date" id="filter-date">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Job ID</th>
+                            <th>Building</th>
+                            <th>Lift ID</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="todays-jobs">
+                        <!-- Rows will be dynamically filled with JavaScript -->
+                    </tbody>
+                </table>
+                <button id="create-job-btn">Create Maintenance Task</button>
+            </div>
+
+            <div class="card">
+                <h2>Technician Activity Tracker</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Technician</th>
+                            <th>Assigned Jobs</th>
+                            <th>Completed</th>
+                            <th>Pending</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="technician-activity">
+                        <!-- Rows will be dynamically filled with JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Buildings Section -->
+        <section id="buildings" class="hidden">
+            <h2>Buildings</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Building Name</th>
+                        <th>Lifts</th>
+                        <th>Address</th>
+                        <th>Contact</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="buildings-list">
+                    <!-- Rows will be dynamically filled with JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Technicians Section -->
+        <section id="technicians" class="hidden">
+            <h2>Technicians</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Date Joined</th>
+                        <th>Total Jobs</th>
+                        <th>Completed</th>
+                        <th>Pending</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="technicians-list">
+                    <!-- Rows will be dynamically filled with JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Calendar Section -->
+        <section id="calendar" class="hidden">
+            <h2>Calendar</h2>
+            <div id="calendar-view">
+                <!-- Calendar for tasks and technicians' work schedules -->
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports" class="hidden">
+            <h2>Reports</h2>
+            <div id="reports-graph">
+                <!-- Graphical representation of report data -->
+            </div>
+            <table id="technician-summary">
+                <thead>
+                    <tr>
+                        <th>Technician</th>
+                        <th>Completed Jobs</th>
+                        <th>Pending Jobs</th>
+                        <th>Overdue Jobs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data for technician job stats -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Claims Section -->
+        <section id="claims" class="hidden">
+            <h2>Claims</h2>
+            <table id="claims-table">
+                <thead>
+                    <tr>
+                        <th>Building</th>
+                        <th>Job ID</th>
+                        <th>Technician</th>
+                        <th>Lift ID</th>
+                        <th>Job Description</th>
+                        <th>Claim Status</th>
+                    </tr>
+                </thead>
+                <tbody id="claims-list">
+                    <!-- Rows will be dynamically filled with JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Logged Issues Section -->
+        <section id="issues" class="hidden">
+            <h2>Logged Issues</h2>
+            <label for="issue-date-filter">Filter by Date: </label>
+            <input type="date" id="issue-date-filter">
+            <table id="issues-table">
+                <thead>
+                    <tr>
+                        <th>Developer</th>
+                        <th>Issue Logged Date</th>
+                        <th>Building</th>
+                        <th>Lift ID</th>
+                        <th>Issue Description</th>
+                    </tr>
+                </thead>
+                <tbody id="issues-list">
+                    <!-- Rows will be dynamically filled with JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Alerts Section -->
+        <section id="alerts" class="hidden">
+            <h2>Alerts</h2>
+            <table id="alerts-table">
+                <thead>
+                    <tr>
+                        <th>Alert Type</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="alerts-list">
+                    <!-- Rows will be dynamically filled with JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
